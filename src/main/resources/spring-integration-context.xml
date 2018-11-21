@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:int="http://www.springframework.org/schema/integration"
+       xmlns:file="http://www.springframework.org/schema/integration/file"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/integration/file http://www.springframework.org/schema/integration/file/spring-integration-file-2.0.xsd">
+
+    <bean id="baseDirectory" class="java.lang.String">
+        <constructor-arg value="C:/Users/yschahar/Desktop" />
+    </bean>
+
+    <!-- 1) Scan for files -->
+    <file:inbound-channel-adapter id="recommendationChannel1"
+                                  directory="#{baseDirectory}" filename-regex="^(.*)-(\d+)\.xlsx">
+        <int:poller fixed-rate="1000" />
+    </file:inbound-channel-adapter>
+
+    <!-- 2) move the file to processing -->
+    <file:outbound-gateway request-channel="recommendationChannel1"
+                           directory="#{baseDirectory}/processing1"
+                           reply-channel="recommendationChannel2"
+                           delete-source-files="true" />
+
+    <!-- 3) transform/performance metadata calculation if  required-->
+    <int:service-activator input-channel="recommendationChannel2" output-channel="recommendationChannel3" ref="fileMetadataService" method="execute1" />
+
+    <!-- 4) run import -->
+    <int:service-activator input-channel="recommendationChannel3"  output-channel="recommendationChannel4"  ref="fileImportService" method="doImport" />
+
+    <!-- 5) cleanup -->
+    <int:service-activator input-channel="recommendationChannel4"  ref="cleanupService" method="clean" />
+
+    <bean id="fileMetadataService" class="com.chahar.spring.service.FileMetadataService" />
+    <bean id="fileImportService" class="com.chahar.spring.service.FileImporterService" />
+    <bean id="cleanupService" class="com.chahar.spring.service.FileCleanupService" />
+</beans>
