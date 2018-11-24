@@ -13,25 +13,25 @@
     </bean>
 
     <!-- 1) Scan for files -->
-    <file:inbound-channel-adapter id="recommendationChannel1"
+    <file:inbound-channel-adapter id="recommendation_Channel_1"
                                   directory="#{baseDirectory}" filename-regex="^(.*)-(\d+)\.xlsx">
         <int:poller fixed-rate="1000" />
     </file:inbound-channel-adapter>
 
     <!-- 2) move the file to processing -->
-    <file:outbound-gateway request-channel="recommendationChannel1"
-                           directory="#{baseDirectory}/processing1"
-                           reply-channel="recommendationChannel2"
-                           delete-source-files="true" />
+    <file:outbound-gateway request-channel="recommendation_Channel_1" reply-channel="recommendation_Channel_2"
+                           directory="#{baseDirectory}/processing1"  delete-source-files="true" />
 
     <!-- 3) transform/performance metadata calculation if  required-->
-    <int:service-activator input-channel="recommendationChannel2" output-channel="recommendationChannel3" ref="fileMetadataService" method="execute1" />
+    <int:service-activator input-channel="recommendation_Channel_2" output-channel="recommendation_Channel_3"
+                           ref="fileMetadataService" method="execute1" />
 
     <!-- 4) run import -->
-    <int:service-activator input-channel="recommendationChannel3"  output-channel="recommendationChannel4"  ref="fileImportService" method="doImport" />
+    <int:service-activator input-channel="recommendation_Channel_3"  output-channel="recommendation_Channel_4"
+                           ref="fileImportService" method="doImport" />
 
     <!-- 5) cleanup -->
-    <int:service-activator input-channel="recommendationChannel4"  ref="cleanupService" method="clean" />
+    <int:service-activator input-channel="recommendation_Channel_4"  ref="cleanupService" method="clean" />
 
     <bean id="fileMetadataService" class="com.chahar.spring.service.FileMetadataService" />
     <bean id="fileImportService" class="com.chahar.spring.service.FileImporterService" />
