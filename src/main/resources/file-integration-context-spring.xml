@@ -4,23 +4,32 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:int="http://www.springframework.org/schema/integration"
        xmlns:file="http://www.springframework.org/schema/integration/file"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
-		http://www.springframework.org/schema/integration/file http://www.springframework.org/schema/integration/file/spring-integration-file-2.0.xsd">
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/integration
+		http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/integration/file
+		http://www.springframework.org/schema/integration/file/spring-integration-file-2.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+
+    <context:property-placeholder location="classpath:project.properties" />
 
     <bean id="baseDirectory" class="java.lang.String">
-        <constructor-arg value="C:/Users/yschahar/Desktop" />
+        <constructor-arg value="${spring.file.monitoring.dir}" />
     </bean>
 
     <!-- 1) Scan for files -->
     <file:inbound-channel-adapter id="recommendation_Channel_1"
-                                  directory="#{baseDirectory}" filename-regex="^(.*)-(\d+)\.xlsx">
+             directory="#{baseDirectory}" filename-regex="^(.*)_(.*)_(.*)(\d+)\.impex">
         <int:poller fixed-rate="1000" />
     </file:inbound-channel-adapter>
 
     <!-- 2) move the file to processing -->
     <file:outbound-gateway request-channel="recommendation_Channel_1" reply-channel="recommendation_Channel_2"
-                           directory="#{baseDirectory}/processing1"  delete-source-files="true" />
+                           directory="#{baseDirectory}/processing"  delete-source-files="true" />
 
     <!-- 3) transform/performance metadata calculation if  required-->
     <int:service-activator input-channel="recommendation_Channel_2" output-channel="recommendation_Channel_3"
