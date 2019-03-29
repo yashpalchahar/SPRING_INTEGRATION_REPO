@@ -1,4 +1,4 @@
-package com.chahar.cucumber.configuration;
+package com.chahar.cucumber.runner;
 
 import cucumber.api.CucumberOptions;
 import cucumber.api.junit.Cucumber;
