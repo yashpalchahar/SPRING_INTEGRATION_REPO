@@ -40,11 +40,22 @@
             <artifactId>spring-context-support</artifactId>
             <version>${spring.version}</version>
         </dependency>
+<<<<<<< HEAD
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
             <version>${spring.version}</version>
         </dependency>
+=======
+
+   <!-- spring ftp integration dependency starts here -->
+        <!-- <dependency>
+            <groupId>org.springframework.integration</groupId>
+            <artifactId>spring-integration-ftp</artifactId>
+            <version>${spring.version}</version>
+        </dependency> -->
+        <!-- spring ftp integration dependency ends here -->
+>>>>>>> 0d38bc86237e36bd5d932c7af6a30a44b92abefe
 
         <!-- spring file integration starts here -->
         <dependency>
