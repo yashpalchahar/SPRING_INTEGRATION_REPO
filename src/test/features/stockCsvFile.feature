@@ -1,3 +1,4 @@
+@ProcessStockFile
 Feature: Process Stock csv file
 
   Scenario: Process stock csv file - general scenario
@@ -18,8 +19,8 @@ UPDATE Stocks; product(code); warehouse(code);value;
     |w100     |PARTIAL      | comment 2|
     And information is given as below
     |info | comment| email|
-    |add to cart operation| user perform add to cart | yashpal@gmail.com|
+    |add to cart operation| user perform add to cart | test@gmail.com|
     When perform action on cart with given detail
     |product|quantity|userId           |
-    |P123123|100     |yashpal@gmail.com|
+    |P123123|100     |test@gmail.com   |
     Then verify result with given "101" user id

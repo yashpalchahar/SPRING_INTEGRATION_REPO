@@ -10,7 +10,7 @@ public class FileMetadataService {
       System.out.println("FileMetadataService.execute1() called: " + message);
 
         try {
-            Thread.sleep(5000);
+            Thread.sleep(1000);
         }catch (Exception e){
             System.out.println(e);
         }

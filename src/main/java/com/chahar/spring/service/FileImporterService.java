@@ -10,7 +10,7 @@ public class FileImporterService {
         System.out.println("FileImporterService.doImport() called " + message);
 
         try {
-            Thread.sleep(10000);
+            Thread.sleep(5000);
         }catch (Exception e){
             System.out.println(e);
         }

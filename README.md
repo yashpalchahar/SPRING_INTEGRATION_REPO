@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 This project contains spring integration POC.
 
 1- spring file integration
@@ -9,9 +9,12 @@ This project contains spring integration POC.
 
 4- junit to run cucumber test case
 
-=======
+Mockito: mock associated dependencies in particular java service/bean.
+MockServer: for mocking any system you integrate with via HTTP or HTTPS (i.e. services, web sites, etc)
+WireMock: is a simulator for HTTP-based APIs, similar to MockServer.
 
 References:
 	https://docs.spring.io/spring-integration/reference/html/messaging-endpoints-chapter.html#service-activator-namespace
->>>>>>> 0d38bc86237e36bd5d932c7af6a30a44b92abefe
+
+https://docs.cucumber.io/cucumber/mocking-and-stubbing-with-cucumber/
 

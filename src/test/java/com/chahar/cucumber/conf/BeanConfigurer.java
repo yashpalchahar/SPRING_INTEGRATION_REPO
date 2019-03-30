@@ -1,6 +1,7 @@
-package com.chahar.cucumber.configuration;
+package com.chahar.cucumber.conf;
 
 import com.chahar.cucumber.dto.CartDto;
+import com.chahar.cucumber.dto.CustomerDto;
 import com.chahar.cucumber.dto.InfoDto;
 import com.chahar.cucumber.dto.StockFeedDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -55,7 +56,8 @@ public class BeanConfigurer implements TypeRegistryConfigurer {
         typeRegistry.defineDataTableType(new DataTableType(InfoDto.class,
                 (Map<String, String> row )-> jacksonObjectMapper.convertValue(row,InfoDto.class)));
 
-
+        typeRegistry.defineDataTableType(new DataTableType(CustomerDto.class,
+                (Map<String, String> row )-> jacksonObjectMapper.convertValue(row,CustomerDto.class)));
       /*List<Class> dtoClassList = new ArrayList<>();
         dtoClassList.add(CartDto.class);*/
 
