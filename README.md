@@ -1,3 +1,4 @@
+Used Apache maven: 3.3.9
 
 This project contains spring integration POC.
 
